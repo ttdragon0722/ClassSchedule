@@ -5,13 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>課表</title>
         <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
         <link rel="icon" type="image/x-icon" href="icon.ico">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
             rel="stylesheet">
-
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+            integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <meta property="og:title" content="113-2課表">
         <meta property="og:description" content="113年度下學期課表">
         <meta property="og:image" content="class.png">
@@ -86,39 +91,42 @@
         class="bg-[#c9cbbd] relative w-full h-svh flex justify-center items-center ">
         <div
             class="w-full max-w-md md:max-w-xl mx-auto p-4 bg-[#ddded0] h-[95%] rounded-lg flex px-0">
-            <table
-                class="time-table border-spacing-2 border-separate border-spacing-2 h-full opacity-50 mr-1">
-                <tr>
-                    <th class="py-3 opacity-0">哈哈</th>
-                </tr>
-                <tr>
-                    <td>9:10<br />10:00</td>
-                </tr>
-                <tr>
-                    <td>10:10<br />11:00</td>
-                </tr>
-                <tr>
-                    <td>11:10<br />12:00</td>
-                </tr>
-                <tr>
-                    <td class="time-mid">12:00<br />13:25</td>
-                </tr>
-                <tr>
-                    <td>13:25<br />14:15</td>
-                </tr>
-                <tr>
-                    <td>14:20<br />15:10</td>
-                </tr>
-                <tr>
-                    <td>15:20<br />16:10</td>
-                </tr>
-                <tr>
-                    <td>16:15<br />17:05</td>
-                </tr>
-                <tr>
-                    <td>17:10<br />18:00</td>
-                </tr>
-            </table>
+            <div id="time-table" class="overflow-hidden">
+                <table
+                    class="time-table border-spacing-2 border-separate border-spacing-2 h-full opacity-50 mr-1">
+                    <tr>
+                        <th class="py-3 opacity-0">哈哈</th>
+                    </tr>
+                    <tr>
+                        <td>9:10<br />10:00</td>
+                    </tr>
+                    <tr>
+                        <td>10:10<br />11:00</td>
+                    </tr>
+                    <tr>
+                        <td>11:10<br />12:00</td>
+                    </tr>
+                    <tr>
+                        <td class="time-mid">12:00<br />13:25</td>
+                    </tr>
+                    <tr>
+                        <td>13:25<br />14:15</td>
+                    </tr>
+                    <tr>
+                        <td>14:20<br />15:10</td>
+                    </tr>
+                    <tr>
+                        <td>15:20<br />16:10</td>
+                    </tr>
+                    <tr>
+                        <td>16:15<br />17:05</td>
+                    </tr>
+                    <tr>
+                        <td>17:10<br />18:00</td>
+                    </tr>
+                </table>
+            </div>
+
             <table
                 class="w-full border-spacing-2 border-separate border-spacing-2 flex-1">
                 <tr class="text-center font-bold bg-[#4a4c3e] text-[#ddded0] ">
@@ -207,5 +215,38 @@
                 </tr>
             </table>
         </div>
+        <button id="toggleButton"
+            class="fixed right-[2%] bottom-[2%] p-2 w-12 h-12 rounded-full bg-[#4a4c3e] text-white justify-center items-center ">
+            <i class="fa-solid fa-clock"></i>
+        </button>
+        <script>
+            // 設定 GSAP 初始狀態，預設為隱藏時間表
+let isVisible = false;  // 預設為隱藏
+
+// 在頁面載入時隱藏 #time-table
+document.getElementById("time-table").style.display = "none"; 
+
+document.getElementById("toggleButton").addEventListener("click", function() {
+    const timeTable = document.getElementById("time-table");
+
+    if (isVisible) {
+        // 隱藏時間表，縮小寬度至 0 並設為 display: none
+        gsap.to(timeTable, { opacity: 0, duration: 0.5, width: 0, onComplete: () => {
+            timeTable.style.display = "none"; // 隱藏元素
+        }});
+        this.textContent = "顯示時間表";
+    } else {
+        // 顯示時間表，恢復寬度並設為 display: block
+        timeTable.style.display = "block"; // 顯示元素
+        gsap.fromTo(timeTable, 
+            { opacity: 0, width: 0 }, 
+            { opacity: 1, width: "auto", duration: 0.5 }
+        );
+        this.textContent = "隱藏時間表";
+    }
+    isVisible = !isVisible; // 切換顯示狀態
+});
+
+        </script>
     </body>
 </html>
