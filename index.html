@@ -234,7 +234,7 @@ document.getElementById("toggleButton").addEventListener("click", function() {
         gsap.to(timeTable, { opacity: 0, duration: 0.5, width: 0, onComplete: () => {
             timeTable.style.display = "none"; // 隱藏元素
         }});
-        this.textContent = "顯示時間表";
+        
     } else {
         // 顯示時間表，恢復寬度並設為 display: block
         timeTable.style.display = "block"; // 顯示元素
@@ -242,7 +242,7 @@ document.getElementById("toggleButton").addEventListener("click", function() {
             { opacity: 0, width: 0 }, 
             { opacity: 1, width: "auto", duration: 0.5 }
         );
-        this.textContent = "隱藏時間表";
+        
     }
     isVisible = !isVisible; // 切換顯示狀態
 });
